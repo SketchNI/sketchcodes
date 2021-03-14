@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400&family=Work+Sans:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-sans antialiased text-gray-300 bg-gray-850;
+}
+
+a {
+    @apply text-purple-400 hover:text-purple-500 hover:underline focus:text-purple-300;
+    @apply transition duration-150 ease-in;
+}
