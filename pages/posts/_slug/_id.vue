@@ -1,22 +1,36 @@
 <template>
-    <div class="mx-auto mt-6 lg:w-3/4">
-        <div class="grid grid-cols-4 gap-4">
-            <div class="col-span-3">
-                <div class="post">
-                    <div class="prose prose-purple lg:prose-xl">
-                        <h1 class="title" v-html="post.title.rendered"></h1>
-                        <p class="meta text-sm">
-                            <span class="text-gray-400">Posted in</span> {{ resolve_taxonomy(post.categories, 'category') }}
-                            <span class="text-gray-400">&middot;</span>
-                            <span class="text-gray-400">Posted</span> {{ $moment(post.date_gmt).fromNow() }}
-                            <span class="text-gray-500">({{ $moment(post.date_gmt).format("MMMM Do YYYY h:mm a") }})</span>
-                        </p>
-                        <div class="content" v-html="post.content.rendered"></div>
+    <div class="mx-4 lg:mx-auto mt-6 lg:w-3/4">
+        <div class="grid grid-cols-3 gap-12 mb-12">
+            <div class="col-span-3 lg:col-span-2">
+                <div class="prose prose-sm md:prose-lg lg:prose-xl dark:prose">
+                    <h1 class="title" v-html="post.fields.title" />
+                    <p class="meta text-sm">
+                        <span class="text-gray-400">Posted in</span>
+                        <span v-for="(cat, i) in post.fields.category">
+                            {{ cat.fields.category }}<span v-if="i !== post.fields.category.length - 1">,</span>
+                        </span>
+                        <span class="text-gray-400">&middot;</span>
+                        <span class="text-gray-400">Posted</span> {{ $moment(post.sys.createdAt).fromNow() }}
+                        <span class="text-gray-500">({{
+                                $moment(post.sys.createdAt).format("MMMM Do YYYY \\a\\t h:mm a")
+                            }})</span>
+                    </p>
+
+                    <div class="content text-justify" v-html="post.fields.content"></div>
+
+                    <div class="mt-4 mb-12">
+                        <strong class="md:text-lg lg:text-xl">Tags</strong>
+                        <div class="tags mt-2">
+                            <span v-for="tag in post.metadata.tags" :key="tag.sys.id"
+                                  class="px-2 rounded-full text-sm py-1 inline-block mb-2 mr-2 bg-purple-500 text-gray-200">
+                                {{ tag.sys.id }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-span-1">
+            <div class="col-span-3 lg:col-span-1">
                 <widgets />
             </div>
         </div>
@@ -25,6 +39,9 @@
 
 <script>
 import Widgets from "../../../components/Posts/Widgets";
+let contentful = require('contentful');
+
+let markdown = require('markdown').markdown;
 
 export default {
     name: "Post",
@@ -35,38 +52,51 @@ export default {
 
     created() {
         this.getPost();
+
+        this.$nuxt.$on('GetPostsByCategory', data => {
+            this.$store.commit('category/store', data);
+            this.$nuxt.$router.push(`/posts#filter`);
+        });
     },
 
     data() {
         return {
+            markdown,
             post: {
-                categories: [],
-                slug: null,
-                title: {
-                    rendered: null,
+                fields: {
+                    category: null,
+                    content: null,
+                    slug: null,
+                    title: null,
                 },
-                content: {
-                    rendered: null,
+                metadata: {
+                    tags: {
+
+                    }
                 },
-                date_gmt: new Date(),
+                sys: {
+                    id: null,
+                }
             },
         }
     },
 
     methods: {
         getPost() {
-            this.$axios.get(`https://www.sketchni.uk/wp-json/wp/v2/posts/${this.$route.params.id}?_fields=categories,title,content,date_gmt,title,slug`).then(res => {
-                this.post = res.data;
-            })
-        },
-
-        resolve_taxonomy(contents, type) {
-            let tax_list = [];
-            contents.forEach( tax => {
-                tax_list.push(tax[`${type}_name`]);
+            const client = contentful.createClient({
+                space: process.env.CONTENTFUL_ID,
+                environment: 'master',
+                accessToken: process.env.CONTENTFUL_KEY,
             });
 
-            return tax_list.join(", ");
+            client.getEntry(this.$route.params.id, {
+                content_type: ['blogPost', 'category'],
+            })
+                .then(res => {
+                    this.post = res;
+                    this.post.fields.content = markdown.toHTML(res.fields.content.content[0].content[0].value);
+                    this.loading = false;
+                })
         },
     }
 }

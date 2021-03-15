@@ -1,35 +1,40 @@
 <template>
-    <div class="mx-auto mt-6 lg:w-3/4">
-        <div class="grid grid-cols-4 gap-4">
-            <div class="col-span-3" v-if="!loading">
+    <div class="lg:mx-auto mx-4 mt-6 lg:w-3/4">
+        <div class="grid grid-cols-3 gap-12">
+            <div class="col-span-3 lg:col-span-2" v-if="!loading">
                 <div v-if="Object.keys(posts).length > 0" class="posts">
-                    <div v-for="post in posts" :key="post.id" class="prose prose-purple lg:prose-xl">
+                    <div v-for="post in posts" :key="post.sys.id"
+                         class="prose prose-sm md:prose-lg lg:prose-xl dark:prose">
                         <h1 class="title">
-                            <NuxtLink :to="`/posts/${post.slug}/${post.id}`" v-html="post.title.rendered"></NuxtLink>
+                            <NuxtLink :to="`/posts/${post.fields.slug}/${post.sys.id}`"
+                                      v-html="post.fields.title"></NuxtLink>
                         </h1>
                         <p class="meta text-sm">
                             <span class="text-gray-400">Posted in</span>
-                            {{ resolve_taxonomy(post.categories, 'category') }}
+                            <span v-for="(cat, i) in post.fields.category">
+                                    {{ cat.fields.category }}<span v-if="i !== post.fields.category.length - 1">,</span>
+                                </span>
                             <span class="text-gray-400">&middot;</span>
-                            <span class="text-gray-400">Posted</span> {{ $moment(post.date_gmt).fromNow() }}
+                            <span class="text-gray-400">Posted</span> {{ $moment(post.sys.createdAt).fromNow() }}
                             <span class="text-gray-500">({{
-                                    $moment(post.date_gmt).format("MMMM Do YYYY h:mm a")
+                                    $moment(post.sys.createdAt).format("MMMM Do YYYY h:mm a")
                                 }})</span>
                         </p>
-                        <div class="content" v-html="post.excerpt.rendered"></div>
+                        <div class="content text-justify"
+                             v-html="markdown.toHTML(post.fields.content.content[0].content[0].value)"></div>
                     </div>
                 </div>
                 <div v-else>
-                    <h2 class="text-lg text-gray-400 text-center">
-                        - No posts to display -
+                    <h2 class="text-lg text-gray-400 text-center my-12 py-3 px-5 bg-orange-500 bg-opacity-70 text-red-100 shadow rounded-lg text-xl">
+                        - Ah, I haven't posted anything with the category {{ active_category.label }} -
                     </h2>
                 </div>
             </div>
-            <div class="col-span-3" v-if="loading">
-                <Loading />
+            <div class="col-span-3 lg:col-span-2" v-if="loading">
+                <Loading/>
             </div>
 
-            <div class="col-span-1">
+            <div class="col-span-3 lg:col-span-1">
                 <widgets/>
             </div>
         </div>
@@ -39,6 +44,10 @@
 <script>
 import Widgets from "../../components/Posts/Widgets";
 import Loading from "../../components/Loading";
+
+let contentful = require('contentful');
+
+let markdown = require('markdown').markdown;
 
 export default {
     name: "Posts",
@@ -51,14 +60,28 @@ export default {
     created() {
         this.getPosts();
 
+        if (this.$route.hash === '#filter') {
+            this.$nextTick(() => {
+                this.active_category = this.$store.state.category.category;
+                this.$nuxt.$emit('SetActiveCategory', this.active_category);
+                this.getPostsByCategory();
+                this.$store.commit('category/clear');
+            });
+        }
+
         this.$nuxt.$on('GetPostsByCategory', data => {
             this.active_category = data;
-            this.getPostsByCategory();
+            if (this.active_category.id === null) {
+                this.getPosts();
+            } else {
+                this.getPostsByCategory();
+            }
         });
     },
 
     data() {
         return {
+            markdown,
             posts: {
                 type: Object,
                 default: {}
@@ -67,35 +90,46 @@ export default {
                 type: Boolean,
                 default: true,
             },
-            active_category: null,
+            active_category: {
+                id: null,
+                label: null
+            },
         }
     },
 
     methods: {
-        getPostsByCategory() {
-            this.loading = true;
-            this.$axios.get(`https://www.sketchni.uk/wp-json/wp/v2/posts?categories=${this.active_category.id}&_fields=id,categories,title,excerpt,date_gmt,title,slug`)
+        getPosts() {
+            const client = contentful.createClient({
+                space: process.env.CONTENTFUL_ID,
+                environment: 'master',
+                accessToken: process.env.CONTENTFUL_KEY,
+            });
+
+            client.getEntries({
+                content_type: 'blogPost'
+            })
                 .then(res => {
-                    this.posts = res.data;
+                    this.posts = res.items;
                     this.loading = false;
                 })
         },
 
-        getPosts() {
-            this.$axios.get(`https://www.sketchni.uk/wp-json/wp/v2/posts?_fields=id,categories,title,excerpt,date_gmt,title,slug`)
-                .then(res => {
-                    this.posts = res.data;
-                    this.loading = false;
-                });
-        },
-
-        resolve_taxonomy(contents, type) {
-            let tax_list = [];
-            contents.forEach((tax) => {
-                tax_list.push(tax[`${type}_name`]);
+        getPostsByCategory() {
+            this.loading = true;
+            const client = contentful.createClient({
+                space: process.env.CONTENTFUL_ID,
+                environment: 'master',
+                accessToken: process.env.CONTENTFUL_KEY,
             });
 
-            return tax_list.join(", ");
+            client.getEntries({
+                content_type: 'blogPost',
+                'fields.category.sys.id[in]': this.active_category.id,
+            })
+                .then(res => {
+                    this.posts = res.items;
+                    this.loading = false;
+                })
         },
     }
 }

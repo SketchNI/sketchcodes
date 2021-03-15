@@ -9,7 +9,7 @@ module.exports = {
         './plugins/**/*.{js,ts}',
         './nuxt.config.{js,ts}'
     ],
-    darkMode: 'media', // or 'media' or 'class'
+    darkMode: 'class', // or 'media' or 'class'
     theme: {
         extend: {
             typography: (theme) => ({
@@ -19,7 +19,11 @@ module.exports = {
                         fontFamily: theme('fontFamily.display'),
                         strong: {
                             fontWeight: 600,
-                            color: theme('color.gray.300'),
+                            color: theme('color.blue.300'),
+                        },
+                        b: {
+                            fontWeight: 600,
+                            color: theme('color.blue.300'),
                         },
                         h3: {
                             color: theme('colors.gray.300'),
@@ -28,12 +32,13 @@ module.exports = {
                             color: theme('colors.gray.200'),
                         },
                         h1: {
-                            color: theme('colors.purple.200'),
+                            color: theme('colors.purple.300'),
                             textDecoration: 'none',
                             marginBottom: 0,
                         },
                         a: {
                             textDecoration: 'none',
+                            color: theme('colors.purple.400'),
                         }
                     }
                 },
