@@ -21,7 +21,10 @@
                                 }})</span>
                         </p>
                         <div class="content text-justify"
-                             v-html="markdown.toHTML(post.fields.content.content[0].content[0].value)"></div>
+                             v-html="markdown.toHTML(post.fields.content.content[0].content[0].value).substring(0, 300)"></div>
+                        <NuxtLink :to="`/posts/${post.fields.slug}/${post.sys.id}`">Read full post</NuxtLink>
+
+                        <div v-if="Object.keys(posts).length > 1" class="border-b border-gray-600 shadow my-4 w-full" />
                     </div>
                 </div>
                 <div v-else>
