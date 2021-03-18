@@ -1,8 +1,8 @@
 <template>
-    <div class="mx-auto mt-6 lg:w-3/4">
+    <div>
         <div v-if="!loading">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-2 md:col-span-1 bg-cool-800 p-4 rounded-lg shadow text-gray-300" v-for="repo in projects">
+            <div class="grid grid-cols-2 gap-4 mb-12">
+                <div class="col-span-2 md:col-span-1 bg-gray-700 p-4 rounded-lg shadow text-gray-300" v-for="repo in projects">
                     <Repository :repository="repo" />
                 </div>
             </div>

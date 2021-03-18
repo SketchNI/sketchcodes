@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-4 lg:mx-auto mt-6 lg:w-3/4">
+    <div>
         <div class="grid grid-cols-3 gap-12 mb-12">
             <div class="col-span-3 lg:col-span-2">
                 <div class="prose prose-sm md:prose-lg lg:prose-xl dark:prose">

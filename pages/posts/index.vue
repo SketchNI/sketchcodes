@@ -1,5 +1,5 @@
 <template>
-    <div class="lg:mx-auto mx-4 mt-6 lg:w-3/4">
+    <div>
         <div class="grid grid-cols-3 gap-12">
             <div class="col-span-3 lg:col-span-2" v-if="!loading">
                 <div v-if="Object.keys(posts).length > 0" class="posts">
