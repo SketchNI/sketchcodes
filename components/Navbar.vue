@@ -28,6 +28,14 @@
                     </svg>
                     Projects
                 </NuxtLink>
+
+                <NuxtLink active-class="active" exact prefetch to="/tools">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 inline-block text-gray-300"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                    Tools
+                </NuxtLink>
             </div>
         </div>
     </div>
@@ -52,7 +60,7 @@ a:not(.active):hover svg {
 a {
     @apply text-gray-200 p-4 border-b-4 border-transparent inline-flex items-center;
     @apply hover:text-blue-300 focus:text-blue-400 hover:border-blue-300 focus:border-blue-400;
-    @apply transition duration-150 ease-in;
+    @apply transition no-underline duration-150 ease-in;
 }
 
 a.active svg {

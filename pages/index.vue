@@ -44,17 +44,16 @@
                         <li>
                             <span class="label">Languages:</span> PHP, Javascript, C#.
                         </li>
-                        <li><span class="label">IDE/Editors:</span> PhpStorm, Rider, Visual Studio and VS Code</li>
+                        <li><span class="label">IDE/Editors:</span> Jetbrains Suite, Visual Studio and VS Code</li>
                         <li>
                             <span class="label">Operating Systems:</span>
                             <ul class="list-disc list-inside ml-6">
                                 <li>Windows 10 Pro</li>
                                 <li>WSL 2 Ubuntu 20.04</li>
-                                <li>Linux Mint 20</li>
-                                <li>Mac OSX Catalina</li>
+                                <li>Mac OSX Big Sur</li>
                             </ul>
                         </li>
-                        <li><span class="label">Browsers:</span> Chrome, Chrome Dev, Firefox, Firefox Nightly</li>
+                        <li><span class="label">Browsers:</span> Chrome, Firefox</li>
                         <li><span class="label">Other:</span> Docker, Windows Terminal</li>
                     </ul>
                 </div>
@@ -72,7 +71,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <span class="label">Origin:</span>&nbsp;Search <span
+                                    <span class="label">Origin/EA Desktop:</span>&nbsp;Search <span
                                     class="font-bold">SketchNI</span>
                                 </li>
                                 <li>
@@ -81,12 +80,20 @@
                                         on UPlay
                                     </a>
                                 </li>
+                                <li>
+                                    <span class="label">Epic:</span>&nbsp;Search <span
+                                    class="font-bold">SketchNI</span>
+                                </li>
+                                <li>
+                                    <span class="label">GoG:</span>&nbsp;Search <span
+                                    class="font-bold">SketchNI</span>
+                                </li>
                             </ul>
                         </li>
                         <li>
                             <span>Computer Specs:</span>
                             <ul class="list-disc list-inside ml-6">
-                                <li><span class="label">CPU:</span> AMD Ryzen 5 3600 3.6GHz (Overclocked to 4.2GHz)</li>
+                                <li><span class="label">CPU:</span> AMD Ryzen 5 3600 3.6GHz</li>
                                 <li><span class="label">CPU Cooler:</span> Cooler Master MasterLiquid Lite 240 AIO</li>
                                 <li><span class="label">RAM:</span> Corsair Vengeance DDR4-3200 RGB - 32GB (4x8GB)</li>
                                 <li><span class="label">GPU:</span> MSI GTX 1660Ti</li>
@@ -94,8 +101,9 @@
                                 <li>
                                     <span class="label">Storage:</span>
                                     <ul class="list-disc list-inside ml-6">
-                                        <li><span class="label">m.2:</span> 500GB Western Digital Blue SSD (non-NVMe)
-                                        </li>
+                                        <li><span class="label">m.2:</span> 1TB Western Digital Blue NVMe</li>
+                                        <li><span class="label">m.2:</span> 500GB Western Digital Blue SSD</li>
+                                        <li><span class="label">SSD:</span> 500GB Western Digital Blue SSD</li>
                                         <li><span class="label">SSD:</span> 250GB Crucial SSD</li>
                                         <li><span class="label">HDD:</span> 2x2TB Western Digital Blue</li>
                                     </ul>
@@ -105,8 +113,9 @@
                                 </li>
                                 <li><span class="label">Mouse:</span> Corsair M55 RGB</li>
                                 <li><span class="label">Headset:</span> Corsair Void Pro RGB - Carbon</li>
-                                <li><span class="label">Monitor 1:</span> HP Pavilion 23xi</li>
-                                <li><span class="label">Monitor 2:</span> AOC 2369M</li>
+                                <li><span class="label">Monitor 1:</span> MSI VC239</li>
+                                <li><span class="label">Monitor 2:</span> HP Pavilion 23xi</li>
+                                <li><span class="label">Monitor 3:</span> AOC 2369M</li>
                             </ul>
                         </li>
                     </ul>
