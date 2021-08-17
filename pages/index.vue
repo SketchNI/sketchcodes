@@ -44,13 +44,13 @@
                         <li>
                             <span class="label">Languages:</span> PHP, Javascript, C#.
                         </li>
-                        <li><span class="label">IDE/Editors:</span> Jetbrains Suite, Visual Studio and VS Code</li>
+                        <li><span class="label">IDE/Editors:</span> Jetbrains Suite.</li>
                         <li>
                             <span class="label">Operating Systems:</span>
                             <ul class="list-disc list-inside ml-6">
                                 <li>Windows 10 Pro</li>
-                                <li>WSL 2 Ubuntu 20.04</li>
-                                <li>Mac OSX Big Sur</li>
+                                <li>WSL 2 Ubuntu 21.04</li>
+                                <li>Mac OSX</li>
                             </ul>
                         </li>
                         <li><span class="label">Browsers:</span> Chrome, Firefox</li>
@@ -101,20 +101,19 @@
                                 <li>
                                     <span class="label">Storage:</span>
                                     <ul class="list-disc list-inside ml-6">
-                                        <li><span class="label">m.2:</span> 1TB Western Digital Blue NVMe</li>
-                                        <li><span class="label">m.2:</span> 500GB Western Digital Blue SSD</li>
-                                        <li><span class="label">SSD:</span> 500GB Western Digital Blue SSD</li>
-                                        <li><span class="label">SSD:</span> 250GB Crucial SSD</li>
-                                        <li><span class="label">HDD:</span> 2x2TB Western Digital Blue</li>
+                                        <li><span class="label">m.2:</span> 1TB NVMe</li>
+                                        <li><span class="label">SSD:</span> 1TB SSD</li>
+                                        <li><span class="label">SSD:</span> 500GB SSD</li>
+                                        <li><span class="label">HDD:</span> 2x2TB HDD</li>
                                     </ul>
                                 </li>
-                                <li><span class="label">Keyboard:</span> Corsair K95 Platinum RGB (Cherry MX Blue
-                                    switches)
+                                <li><span class="label">Keyboard:</span>
+                                    Corsair K95 Platinum RGB (Cherry MX Blue)
                                 </li>
                                 <li><span class="label">Mouse:</span> Corsair M55 RGB</li>
-                                <li><span class="label">Headset:</span> Corsair Void Pro RGB - Carbon</li>
+                                <li><span class="label">Headset:</span> Sennheiser EPOS GSP600</li>
                                 <li><span class="label">Monitor 1:</span> MSI VC239</li>
-                                <li><span class="label">Monitor 2:</span> HP Pavilion 23xi</li>
+                                <li><span class="label">Monitor 2:</span> MSI VC239H</li>
                                 <li><span class="label">Monitor 3:</span> AOC 2369M</li>
                             </ul>
                         </li>
