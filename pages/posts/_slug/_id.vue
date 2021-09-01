@@ -38,9 +38,10 @@
 </template>
 
 <script>
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
 import Widgets from "../../../components/Posts/Widgets";
 let contentful = require('contentful');
-
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 let markdown = require('markdown').markdown;
 
 export default {
@@ -61,7 +62,6 @@ export default {
 
     data() {
         return {
-            markdown,
             post: {
                 fields: {
                     category: null,
@@ -82,6 +82,15 @@ export default {
     },
 
     methods: {
+        nl2br (str, is_xhtml) {
+            if (typeof str === 'undefined' || str === null) {
+                return '';
+            }
+            let breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+        },
+
+
         getPost() {
             const client = contentful.createClient({
                 space: process.env.CONTENTFUL_ID,
@@ -94,7 +103,24 @@ export default {
             })
                 .then(res => {
                     this.post = res;
-                    this.post.fields.content = markdown.toHTML(res.fields.content.content[0].content[0].value);
+
+
+                    const options = {
+                        renderMark: {
+                            [MARKS.CODE]: (node) => `<pre><code class="font-mono text-green-300">${node}</code></pre>`
+                        },
+                        renderNode: {
+                            [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
+                                console.log(node.data.target.fields.file.url);
+                                return `<img src="https:${node.data.target.fields.file.url}"
+                                     height="${node.data.target.fields.file.details.image.height}"
+                                     width="${node.data.target.fields.file.details.image.width}"
+                                     alt="${node.data.target.fields.description}"/>`
+                            }
+                        }
+                    };
+
+                    this.post.fields.content = documentToHtmlString(res.fields.content, options);
                     this.loading = false;
                 })
         },
@@ -114,4 +140,5 @@ export default {
 .prose > h1 > a {
     @apply no-underline text-purple-400;
 }
+
 </style>

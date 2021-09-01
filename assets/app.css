@@ -16,3 +16,7 @@ a {
 .prose strong {
     @apply text-blue-300 font-bold !important;
 }
+
+.prose code {
+    color: #9c8a9e !important;
+}

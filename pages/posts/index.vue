@@ -21,7 +21,7 @@
                                 }})</span>
                         </p>
                         <div class="content text-justify"
-                             v-html="markdown.toHTML(post.fields.content.content[0].content[0].value).substring(0, 300)"></div>
+                             v-html="documentToHtmlString(post.fields.content).substring(0, 300)"></div>
                         <NuxtLink :to="`/posts/${post.fields.slug}/${post.sys.id}`">Read full post</NuxtLink>
 
                         <div v-if="Object.keys(posts).length > 1" class="border-b border-gray-600 shadow my-4 w-full" />
@@ -47,10 +47,9 @@
 <script>
 import Widgets from "../../components/Posts/Widgets";
 import Loading from "../../components/Loading";
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 let contentful = require('contentful');
-
-let markdown = require('markdown').markdown;
 
 export default {
     name: "Posts",
@@ -84,7 +83,7 @@ export default {
 
     data() {
         return {
-            markdown,
+            documentToHtmlString,
             posts: {
                 type: Object,
                 default: {}
