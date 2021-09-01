@@ -39,7 +39,7 @@ export default {
 
     methods: {
         getUser() {
-            this.$axios.get(`https://api.github.com/users/sketchni`, {
+            this.$axios.get(`https://api.github.com/users/denverthecoder`, {
                 headers: {'Accept': "application/vnd.github.v3+json"}
             }).then(res => {
                 this.user = res.data;
@@ -49,7 +49,7 @@ export default {
         },
 
         getProjects() {
-            this.$axios.get(`https://api.github.com/users/sketchni/repos`, {
+            this.$axios.get(`https://api.github.com/users/denverthecoder/repos`, {
                 headers: {'Accept': "application/vnd.github.v3+json"}
             }).then(res => {
                 this.projects = res.data;
